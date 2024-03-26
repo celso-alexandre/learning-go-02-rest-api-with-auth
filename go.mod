@@ -1,6 +1,6 @@
 module github.com/celso-alexandre/learning-go-02-rest-api-with-auth
 
-go 1.22.0
+go 1.22.1
 
 require github.com/gin-gonic/gin v1.9.1
 
