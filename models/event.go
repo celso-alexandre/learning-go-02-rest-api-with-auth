@@ -27,6 +27,7 @@ func (e *Event) Create() error {
 	if err != nil {
 		return err
 	}
+	defer stmt.Close()
 	result, err := stmt.Exec(e.Name, e.Description, e.Location, e.Date, e.UserId)
 	if err != nil {
 		return err
