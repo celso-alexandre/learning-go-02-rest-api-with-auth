@@ -1,2 +1,5 @@
 air_errors.log
 tmp/
+*.sqlite
+*.sqlite3
+*.db
