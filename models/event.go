@@ -45,11 +45,11 @@ func formatDbDateTime(t string) (time.Time, error) {
 	return time.Parse(dateTimeFormat, t)
 }
 
-func FindAllEvents() []Event {
+func FindAllEvents() ([]Event, error) {
 	const sql = `SELECT id, name, description, location, date, userId FROM events`
 	rows, err := db.DB.Query(sql)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -59,13 +59,13 @@ func FindAllEvents() []Event {
 		var dateString string
 		err := rows.Scan(&e.Id, &e.Name, &e.Description, &e.Location, &dateString, &e.UserId)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		e.Date, err = formatDbDateTime(dateString)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		events = append(events, e)
 	}
-	return events
+	return events, nil
 }
