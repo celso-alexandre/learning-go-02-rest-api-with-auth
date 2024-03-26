@@ -28,6 +28,7 @@ func (e *Event) Create() error {
 		return err
 	}
 	defer stmt.Close()
+
 	result, err := stmt.Exec(e.Name, e.Description, e.Location, e.Date, e.UserId)
 	if err != nil {
 		return err
@@ -53,7 +54,7 @@ func FindAllEvents() ([]Event, error) {
 	}
 	defer rows.Close()
 
-	events := make([]Event, 0)
+	var events []Event
 	for rows.Next() {
 		var e Event
 		var dateString string
