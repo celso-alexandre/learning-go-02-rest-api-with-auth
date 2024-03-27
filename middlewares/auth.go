@@ -25,3 +25,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func RetrieveAuthPayload(c *gin.Context) utils.JwtPayload {
+	return c.MustGet("payload").(utils.JwtPayload)
+}

@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/middlewares"
 	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/models"
-	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,7 +25,7 @@ func createEvent(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	jwtPayload := c.MustGet("payload").(utils.JwtPayload)
+	jwtPayload := middlewares.RetrieveAuthPayload(c)
 	e.UserId = jwtPayload.UserId
 	err = e.Create()
 	if err != nil {
@@ -57,7 +57,7 @@ func updateEvent(c *gin.Context) {
 	}
 	var e models.Event
 	err = c.BindJSON(&e)
-	jwtPayload := c.MustGet("payload").(utils.JwtPayload)
+	jwtPayload := middlewares.RetrieveAuthPayload(c)
 	e.UserId = jwtPayload.UserId
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
