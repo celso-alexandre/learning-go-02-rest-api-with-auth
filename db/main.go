@@ -11,7 +11,7 @@ var DB *sql.DB
 
 func InitDB() {
 	var err error
-	DB, err = sql.Open("sqlite3", "./api.db")
+	DB, err = sql.Open("sqlite3", "file:./api.db?_foreign_keys=on")
 	if err != nil {
 		fmt.Println(err)
 		panic("Error opening database")
@@ -38,6 +38,14 @@ func runMigrations() {
 
 			FOREIGN KEY(userId) REFERENCES users(id)
 		);
+		create table if not exists registrations (
+			id integer not null primary key autoincrement,
+			eventId integer not null,
+			userId integer not null,
+
+			FOREIGN KEY(eventId) REFERENCES events(id),
+			FOREIGN KEY(userId) REFERENCES users(id)
+		)
 	`
 	// if DB == nil {
 	// 	fmt.Println("DB is nil")
