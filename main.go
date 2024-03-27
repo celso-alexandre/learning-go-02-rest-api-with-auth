@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/db"
 	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/models"
@@ -45,7 +46,11 @@ func createEvent(c *gin.Context) {
 }
 
 func getEventById(c *gin.Context) {
-	id := c.Param("id")
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	event, err := models.FindEventById(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
