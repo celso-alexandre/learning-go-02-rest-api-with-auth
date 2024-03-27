@@ -38,14 +38,14 @@ func login(c *gin.Context) {
 		return
 	}
 	u.Id = foundUser.Id
-	// fmt.Println("provided", u, "existing", user)
+	// fmt.Println("provided", u, "existing", foundUser)
 	err = utils.ComparePassword(foundUser.Password, u.Password)
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}
-	jwtToken := utils.GenerateJwtToken(utils.JwtPayload{Email: u.Email})
+	jwtToken := utils.GenerateJwtToken(utils.JwtPayload{Email: u.Email, UserId: u.Id})
 	c.JSON(http.StatusOK, gin.H{"token": jwtToken})
 }
 

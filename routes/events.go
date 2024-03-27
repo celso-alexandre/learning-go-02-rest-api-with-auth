@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/models"
+	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,7 +25,8 @@ func createEvent(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	e.UserId = 1
+	jwtPayload := c.MustGet("payload").(utils.JwtPayload)
+	e.UserId = jwtPayload.UserId
 	err = e.Create()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -39,12 +41,12 @@ func getEventById(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	event, err := models.FindEventById(id)
+	e, err := models.FindEventById(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, event)
+	c.JSON(http.StatusOK, e)
 }
 
 func updateEvent(c *gin.Context) {
@@ -55,7 +57,8 @@ func updateEvent(c *gin.Context) {
 	}
 	var e models.Event
 	err = c.BindJSON(&e)
-	e.UserId = 1
+	jwtPayload := c.MustGet("payload").(utils.JwtPayload)
+	e.UserId = jwtPayload.UserId
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

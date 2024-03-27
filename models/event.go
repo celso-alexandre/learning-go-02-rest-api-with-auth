@@ -12,7 +12,7 @@ type Event struct {
 	Description string    `json:"description" binding:"required"`
 	Location    string    `json:"location" binding:"required"`
 	Date        time.Time `json:"date" binding:"required"`
-	UserId      int       `json:"userId"`
+	UserId      int64     `json:"userId"`
 }
 
 func (e *Event) Create() error {
