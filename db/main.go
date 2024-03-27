@@ -23,14 +23,21 @@ func InitDB() {
 
 func runMigrations() {
 	sqlStmt := `
+		create table if not exists users (
+			id integer not null primary key autoincrement,
+			email text not null unique,
+			password text not null
+		);
 		create table if not exists events (
 			id integer not null primary key autoincrement,
 			name text not null, 
 			description text not null, 
 			location text not null, 
 			date text not null, 
-			userId integer not null
-		)
+			userId integer not null,
+
+			FOREIGN KEY(userId) REFERENCES users(id)
+		);
 	`
 	// if DB == nil {
 	// 	fmt.Println("DB is nil")
