@@ -46,6 +46,11 @@ func getEventById(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	jwtPayload := middlewares.RetrieveAuthPayload(c)
+	if e.UserId != jwtPayload.UserId {
+		c.JSON(http.StatusForbidden, gin.H{"error": "You are not allowed to access this event"})
+		return
+	}
 	c.JSON(http.StatusOK, e)
 }
 
