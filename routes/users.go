@@ -45,7 +45,8 @@ func login(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": "You're logged in!"})
+	jwtToken := utils.GenerateJwtToken(utils.JwtPayload{Email: u.Email})
+	c.JSON(http.StatusOK, gin.H{"token": jwtToken})
 }
 
 func getUsers(c *gin.Context) {
