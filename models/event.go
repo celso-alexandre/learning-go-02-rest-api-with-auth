@@ -23,6 +23,9 @@ func (e *Event) Create() error {
 	`
 	// row := db.DB.QueryRow(sql, e.Name, e.Description, e.Location, e.Date, e.UserId)
 	// return row.Scan(&e.Id)
+
+	// Yup, in this case we only call this same statemente 1 time before .Close()
+	// So, there was no real need for Prepare()
 	stmt, err := db.DB.Prepare(sql)
 	if err != nil {
 		return err
