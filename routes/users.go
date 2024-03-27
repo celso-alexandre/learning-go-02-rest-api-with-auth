@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/models"
+	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,14 +32,16 @@ func login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	user, err := models.FindUserByEmail(u.Email)
+	foundUser, err := models.FindUserByEmail(u.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	u.Id = user.Id
-	fmt.Println("provided", u, "existing", user)
-	if user.Password != u.Password {
+	u.Id = foundUser.Id
+	// fmt.Println("provided", u, "existing", user)
+	err = utils.ComparePassword(foundUser.Password, u.Password)
+	if err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}

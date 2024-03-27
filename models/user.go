@@ -1,6 +1,9 @@
 package models
 
-import "github.com/celso-alexandre/learning-go-02-rest-api-with-auth/db"
+import (
+	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/db"
+	"github.com/celso-alexandre/learning-go-02-rest-api-with-auth/utils"
+)
 
 type User struct {
 	Id       int64  `json:"id"`
@@ -13,7 +16,11 @@ func (u *User) Create() error {
 		INSERT INTO users (email, password) 
 		VALUES ($1, $2)
 	`
-	result, err := db.DB.Exec(sql, u.Email, u.Password)
+	passwdHash, err := utils.HashPassword(u.Password)
+	if err != nil {
+		return err
+	}
+	result, err := db.DB.Exec(sql, u.Email, passwdHash)
 	if err != nil {
 		return err
 	}
@@ -21,7 +28,6 @@ func (u *User) Create() error {
 	if err != nil {
 		return err
 	}
-	u.Password = ""
 	return nil
 }
 
@@ -52,7 +58,6 @@ func FindUserById(id int64) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	u.Password = ""
 	return &u, nil
 }
 
@@ -63,7 +68,6 @@ func (u *User) Update() error {
 		WHERE id = $3
 	`
 	_, err := db.DB.Exec(sql, u.Email, u.Password, u.Id)
-	u.Password = ""
 	return err
 }
 
