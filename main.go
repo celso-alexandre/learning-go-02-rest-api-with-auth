@@ -10,9 +10,7 @@ func main() {
 	db.InitDB()
 	server := gin.Default()
 
-	server.GET("/events", routes.GetEvents)
-	server.POST("/events", routes.CreateEvent)
-	server.GET("/events/:id", routes.GetEventById)
+	routes.RegisterRoutes(server)
 
 	server.Run(":3333")
 }
