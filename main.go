@@ -14,6 +14,7 @@ func main() {
 
 	server.GET("/events", getEvents)
 	server.POST("/events", createEvent)
+	server.GET("/events/:id", getEventById)
 
 	server.Run(":3333")
 }
@@ -41,4 +42,14 @@ func createEvent(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusCreated, e)
+}
+
+func getEventById(c *gin.Context) {
+	id := c.Param("id")
+	event, err := models.FindEventById(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, event)
 }

@@ -73,3 +73,20 @@ func FindAllEvents() ([]Event, error) {
 	}
 	return events, nil
 }
+
+func FindEventById(id string) (*Event, error) {
+	const sql = `SELECT id, name, description, location, date, userId FROM events WHERE id = $1`
+	row := db.DB.QueryRow(sql, id)
+
+	var e Event
+	var dateString string
+	err := row.Scan(&e.Id, &e.Name, &e.Description, &e.Location, &dateString, &e.UserId)
+	if err != nil {
+		return nil, err
+	}
+	e.Date, err = formatDbDateTime(dateString)
+	if err != nil {
+		return nil, err
+	}
+	return &e, nil
+}
