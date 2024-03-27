@@ -10,3 +10,7 @@
 - [] DELETE /events/{id}/register // Cancel registration *
 
 // * Requires authentication
+
+# Next goals
+- [] Improve error messages for 404 (it is currently 500) FIND BY ID, UPDATE, DELETE
+- [] Improve error messages (do not display internal error messages raw)
