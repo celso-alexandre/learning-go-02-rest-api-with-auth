@@ -1,0 +1,2 @@
+DELETE http://localhost:3333/events/20
+Content-Type: application/json

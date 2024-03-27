@@ -1,1 +1,1 @@
-GET http://localhost:3333/events/{{$randomInt 1 20}}
+GET http://localhost:3333/events/20

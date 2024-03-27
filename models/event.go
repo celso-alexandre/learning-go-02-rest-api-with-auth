@@ -104,3 +104,9 @@ func FindEventById(id int64) (*Event, error) {
 	}
 	return &e, nil
 }
+
+func DeleteEvent(id int64) error {
+	const sql = `DELETE FROM events WHERE id = $1`
+	_, err := db.DB.Exec(sql, id)
+	return err
+}
