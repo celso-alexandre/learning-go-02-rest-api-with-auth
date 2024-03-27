@@ -46,3 +46,25 @@ func getEventById(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, event)
 }
+
+func updateEvent(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	var e models.Event
+	err = c.BindJSON(&e)
+	e.UserId = 1
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	e.Id = id
+	err = e.Update()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, e)
+}

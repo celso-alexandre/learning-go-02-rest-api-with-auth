@@ -43,6 +43,16 @@ func (e *Event) Create() error {
 	return nil
 }
 
+func (e *Event) Update() error {
+	const sql = `
+		UPDATE events 
+		SET name = $1, description = $2, location = $3, date = $4, userId = $5
+		WHERE id = $6
+	`
+	_, err := db.DB.Exec(sql, e.Name, e.Description, e.Location, e.Date, e.UserId, e.Id)
+	return err
+}
+
 const dateTimeFormat = "2006-01-02 15:04:05-03:00"
 
 func formatDbDateTime(t string) (time.Time, error) {
