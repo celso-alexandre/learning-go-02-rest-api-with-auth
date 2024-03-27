@@ -75,7 +75,11 @@ func FindAllEvents() ([]Event, error) {
 }
 
 func FindEventById(id int64) (*Event, error) {
-	const sql = `SELECT id, name, description, location, date, userId FROM events WHERE id = $1`
+	const sql = `
+		SELECT id, name, description, location, date, userId 
+		FROM events 
+		WHERE id = $1
+	`
 	row := db.DB.QueryRow(sql, id)
 
 	var e Event
