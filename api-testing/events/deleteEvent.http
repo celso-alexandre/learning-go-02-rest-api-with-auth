@@ -1,2 +1,3 @@
 DELETE http://localhost:3333/events/20
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNlbHNvYWxleGFuZHJlQGxpdmUuY29tIiwiZXhwIjoxNzExNTE0NzExLCJ1c2VySWQiOjB9.fTjD22Smy8Y4EbIPCh62wAy3_pzGjzSRYDApgWAWIAY
