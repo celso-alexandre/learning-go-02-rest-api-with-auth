@@ -47,7 +47,8 @@ func (e *Event) Update() error {
 	const sql = `
 		UPDATE events 
 		SET name = $1, description = $2, location = $3, date = $4, userId = $5
-		WHERE id = $6
+		WHERE id     = $6
+		  AND userId = $5
 	`
 	_, err := db.DB.Exec(sql, e.Name, e.Description, e.Location, e.Date, e.UserId, e.Id)
 	return err
@@ -105,8 +106,12 @@ func FindEventById(id int64) (*Event, error) {
 	return &e, nil
 }
 
-func DeleteEvent(id int64) error {
-	const sql = `DELETE FROM events WHERE id = $1`
-	_, err := db.DB.Exec(sql, id)
+func DeleteEvent(id, userId int64) error {
+	const sql = `
+		DELETE FROM events 
+		WHERE id     = $1
+		  AND userId = $2
+	`
+	_, err := db.DB.Exec(sql, id, userId)
 	return err
 }
