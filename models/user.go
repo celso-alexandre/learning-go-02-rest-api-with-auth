@@ -13,12 +13,7 @@ func (u *User) Create() error {
 		INSERT INTO users (email, password) 
 		VALUES ($1, $2)
 	`
-	stmt, err := db.DB.Prepare(sql)
-	if err != nil {
-		return err
-	}
-	defer stmt.Close()
-	result, err := stmt.Exec(u.Email, u.Password)
+	result, err := db.DB.Exec(sql, u.Email, u.Password)
 	if err != nil {
 		return err
 	}
