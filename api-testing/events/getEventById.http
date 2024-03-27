@@ -1,1 +1,2 @@
 GET http://localhost:3333/events/20
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNlbHNvYWxleGFuZHJlQGxpdmUuY29tIiwiZXhwIjoxNzExNTE2MTgwLCJ1c2VySWQiOjF9.9EKRoIpM8zv40OmYe7F4Agudf7W7kwJf61EDocqmJeA
