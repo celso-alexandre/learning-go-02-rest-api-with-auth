@@ -1,13 +1,13 @@
 # Endpoints
-- [] GET /events // Get a list of available events
-- [] GET /events/{id} // Show an especific event
-- [] POST /event // Creates a new event *
-- [] PUT /event/{id} // Updates an event *
-- [] DELETE /event/{id} // Deletes an event *
-- [] POST /signup // Creates a new user
-- [] POST /login // Authenticate user
-- [] POST /events/{id}/register // Register user for event *
-- [] DELETE /events/{id}/register // Cancel registration *
+- [x] GET /events // Get a list of available events
+- [x] GET /events/{id} // Show an especific event
+- [x] POST /event // Creates a new event *
+- [x] PUT /event/{id} // Updates an event *
+- [x] DELETE /event/{id} // Deletes an event *
+- [x] POST /signup // Creates a new user
+- [x] POST /login // Authenticate user
+- [x] POST /events/{id}/register // Register user for event *
+- [x] DELETE /events/{id}/register // Cancel registration *
 
 // * Requires authentication
 
